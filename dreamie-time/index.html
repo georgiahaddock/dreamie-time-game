@@ -1,13 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/main.js"></script>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js"></script>
+    <title>Dreamie Time</title>
+</head>
+<body>
+    <h1>DREAMIE TIME</h2>
+    <script>
+        let dash;
+        let cursors;
+        // let audio_feet;
+        let isRunning;
+
+        function preload () {
+            this.load.spritesheet('idle', './assets/cat-spritesheet.png', {frameWidth: 35, frameHeight: 35})
+            this.load.spritesheet('run', './assets/cat-spritesheet.png', {frameWidth: 35, frameHeight: 35})
+            this.load.spritesheet('jump', './assets/cat-spritesheet.png', {frameWidth: 35, frameHeight: 35})
+            this.load.spritesheet('strike', './assets/cat-spritesheet.png', {frameWidth: 35, frameHeight: 35})
+            // this.load.audio()
+        }
+
+        function create () {
+            dash = this.physics.add.sprite(300, 300, 'idle')
+            red.setScale(1.8)
+            red.setBounce(0.2)
+            red.setCollideWorldBounds(true)
+
+            cursors = this.input.keyboard.createCursorKeys()
+            audio_feet = this.sound.add('feet')
+
+            this.anims.create({
+                key: 'up',
+                frameRate: 35,
+                repeat: -1,
+                frames: this.anims.generateFrameNumbers('jump', {start:1, end:19})
+            })
+
+            this.anims.create({
+                key: 'left',
+                frameRate: 35,
+                repeat: -1,
+                frames: this.anims.generateFrameNumbers('run', { start:1, end: 24 })
+            })
+
+            this.anims.create({
+                key: 'right',
+                frameRate: 35,
+                repeat: -1,
+                frames: this.anims.generateFrameNumbers('run', { start:1, end: 24 })
+            })
+
+            this.anims.create({
+                key: 'idle',
+                frameRate: 10,
+                repeat: -1,
+                frames: this.anims.generateFrameNumbers('idle', { start: 1, end: 18 })
+            })
+
+            this.anims.create({
+                key: 'strike',
+                frameRate: 20,
+                repeat: -1,
+                frames: this.anims.generateFrameNumbers('strike', {start:1, end:30})
+            })
+        }
+
+        function update () {
+            if (cursors.left.isDown) {
+                isRunning = true
+                red.setVelocityX(-290)
+                red.flipX = true
+                red.anims.play('left', true)
+            } else if (cursors.right.isDown) {
+                isRunning = true
+                red.flipX = false
+                red.setVelocityX(290)
+                red.anims.play('right', true)
+            } else if(cursors.up.isDown){
+                isRunning= false
+                red.setVelocityY(-290)
+                red.anims.play('jump', true)
+            }else if(cursors.space.isDown){
+                isRunning = false
+                red.anims.play('strike', true)
+            }else {
+                isRunning = false
+                red.setVelocityX(0)
+                red.anims.play('idle', true)
+            }
+
+            if(isRunning && !audio_feet.isPlaying) {
+                audio_feet.play()
+            }
+
+            if(!isRunning && audio_feet.isPlaying) {
+                audio_feet.stop()
+            }
+        }
+
+        new Phaser.Game({
+            type: Phaser.AUTO,
+            width: 900,
+            height: 250,
+            backgroundColor: '#FFF',
+            physics: {
+                default: 'arcade',
+                arcade: {
+                    gravity: { y: 300 },
+                    debug: false
+                }
+            },
+            scene: { preload, create, update }
+        })
+    </script>
+</body>
 </html>
