@@ -12,93 +12,87 @@
     <script>
         let dash;
         let cursors;
-        // let audio_feet;
-        let isRunning;
+        // let meow_audio;
+        let isWalking;
 
         function preload () {
-            this.load.spritesheet('idle', './assets/cat-spritesheet.png', {frameWidth: 35, frameHeight: 35})
-            this.load.spritesheet('run', './assets/cat-spritesheet.png', {frameWidth: 35, frameHeight: 35})
-            this.load.spritesheet('jump', './assets/cat-spritesheet.png', {frameWidth: 35, frameHeight: 35})
-            this.load.spritesheet('strike', './assets/cat-spritesheet.png', {frameWidth: 35, frameHeight: 35})
-            // this.load.audio()
+            this.load.spritesheet('idle', './assets/cat-spritesheet.png', {frameWidth: 32, frameHeight: 32})
+            this.load.spritesheet('run', './assets/cat-spritesheet.png', {frameWidth: 32, frameHeight: 32})
+            this.load.spritesheet('jump', './assets/cat-spritesheet.png', {frameWidth: 32, frameHeight: 32})
+            // this.load.audio('meow url')
         }
 
         function create () {
-            dash = this.physics.add.sprite(300, 300, 'idle')
-            red.setScale(1.8)
-            red.setBounce(0.2)
-            red.setCollideWorldBounds(true)
+            dash = this.physics.add.sprite(0, 0, 'idle')
+            dash.setScale(2.5)
+            //dash.setBounce(0.2)
+            dash.setCollideWorldBounds(true)
 
             cursors = this.input.keyboard.createCursorKeys()
-            audio_feet = this.sound.add('feet')
-
-            this.anims.create({
-                key: 'up',
-                frameRate: 35,
-                repeat: -1,
-                frames: this.anims.generateFrameNumbers('jump', {start:1, end:19})
-            })
-
-            this.anims.create({
-                key: 'left',
-                frameRate: 35,
-                repeat: -1,
-                frames: this.anims.generateFrameNumbers('run', { start:1, end: 24 })
-            })
-
-            this.anims.create({
-                key: 'right',
-                frameRate: 35,
-                repeat: -1,
-                frames: this.anims.generateFrameNumbers('run', { start:1, end: 24 })
-            })
+            //meow = this.sound.add('meow')
 
             this.anims.create({
                 key: 'idle',
                 frameRate: 10,
                 repeat: -1,
-                frames: this.anims.generateFrameNumbers('idle', { start: 1, end: 18 })
+                frames: this.anims.generateFrameNumbers('idle', { start: 0, end: 3 })
             })
 
             this.anims.create({
-                key: 'strike',
-                frameRate: 20,
+                key: 'left',
+                frameRate: 10,
                 repeat: -1,
-                frames: this.anims.generateFrameNumbers('strike', {start:1, end:30})
+                frames: this.anims.generateFrameNumbers('run', { start: 32, end: 39 })
+            })
+
+            this.anims.create({
+                key: 'right',
+                frameRate: 10,
+                repeat: -1,
+                frames: this.anims.generateFrameNumbers('run', { start: 32, end: 39 })
+            })
+
+            this.anims.create({
+                key: 'up',
+                repeat: -1,
+                frames: this.anims.generateFrameNumbers('jump', { start: 40, end: 45 }),
+                frameRate: 5
             })
         }
 
         function update () {
             if (cursors.left.isDown) {
-                isRunning = true
-                red.setVelocityX(-290)
-                red.flipX = true
-                red.anims.play('left', true)
+                isWalking = true
+                dash.setVelocityX(-290)
+                dash.flipX = true
+                dash.anims.play('left', true)
             } else if (cursors.right.isDown) {
-                isRunning = true
-                red.flipX = false
-                red.setVelocityX(290)
-                red.anims.play('right', true)
+                isWalking = true
+                dash.flipX = false
+                dash.setVelocityX(290)
+                dash.anims.play('right', true)
             } else if(cursors.up.isDown){
-                isRunning= false
-                red.setVelocityY(-290)
-                red.anims.play('jump', true)
-            }else if(cursors.space.isDown){
-                isRunning = false
-                red.anims.play('strike', true)
+                isWalking= false
+                dash.setVelocityY(-290)
+                if(dash.flipX===true){
+                  dash.setVelocityX(-50)
+                }else{
+                  dash.setVelocityX(50)
+                }
+                dash.anims.play('up', true)
             }else {
-                isRunning = false
-                red.setVelocityX(0)
-                red.anims.play('idle', true)
+                isWalking = false
+                dash.setVelocityX(0)
+                dash.anims.play('idle', true)
             }
 
-            if(isRunning && !audio_feet.isPlaying) {
-                audio_feet.play()
-            }
+            // if(isWalking && !audio_feet.isPlaying) {
+            //     audio_feet.play()
+            // }
 
-            if(!isRunning && audio_feet.isPlaying) {
-                audio_feet.stop()
-            }
+            // if(!isWalking && audio_feet.isPlaying) {
+            //     audio_feet.stop()
+            // }
         }
 
         new Phaser.Game({
