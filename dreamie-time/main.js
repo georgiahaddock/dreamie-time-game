@@ -2,6 +2,9 @@
 //import Phaser, { Game } from "phaser";
 
 let dash;
+let treeStump;
+let mushroom1;
+let mushroom2;
 let cursors;
 let isWalking;
 let platforms;
@@ -49,13 +52,35 @@ function create () {
     platforms.create(400, 400, "bg2").refreshBody();
     platforms.create(500, 200, "bg1").setScale(0.3).refreshBody();
 
-    dash = this.physics.add.sprite(0, 0, 'idle')
-    dash.setScale(2.5)
-    //dash.setBounce(0.1)
-    dash.setCollideWorldBounds(true)
-    this.physics.add.collider(dash, platforms);
+    //initialise Dash the cat!
+    dash = this.physics.add.sprite(0, 0, 'idle');
+    dash.setScale(2.5);
 
-    cursors = this.input.keyboard.createCursorKeys()
+    //initialise invisible platforms that match the background
+    treeStump = this.physics.add.sprite(250, 470);
+    treeStump.body.immovable = true;
+    treeStump.body.allowGravity = false;
+    treeStump.setScale(5, 1);
+
+    mushroom1 = this.physics.add.sprite(850, 200);
+    mushroom1.body.immovable = true;
+    mushroom1.body.allowGravity = false;
+    mushroom1.setScale(3, 1);
+
+    mushroom2 = this.physics.add.sprite(1000, 220);
+    mushroom2.body.immovable = true;
+    mushroom2.body.allowGravity = false;
+    mushroom2.setScale(3, 1);
+
+    //dash.setBounce(0.1)
+    dash.setCollideWorldBounds(true);
+    this.physics.add.collider(dash, platforms);
+    this.physics.add.collider(dash, treeStump);
+    this.physics.add.collider(dash, mushroom1);
+    this.physics.add.collider(dash, mushroom2);
+
+
+    cursors = this.input.keyboard.createCursorKeys();
     //meow = this.sound.add('meow')
 
     this.anims.create({
