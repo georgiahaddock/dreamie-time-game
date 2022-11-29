@@ -1,4 +1,3 @@
-//import './style.css'
 //import Phaser, { Game } from "phaser";
 
 let dash;
@@ -60,7 +59,7 @@ function create () {
 
     //initialise Dash the cat!
     dash = this.physics.add.sprite(0, 0, 'idle');
-    dash.setScale(2.5);
+    dash.setScale(3);
     dash.setBounce(0.5);
     dash.setCollideWorldBounds(true);
 
@@ -86,12 +85,24 @@ function create () {
     floatingLog.body.allowGravity = false;
 
     //set up the dreamies!!
-    dreamies = this.physics.add.sprite(550, 550, "dreamies").setScale(0.15);
-    dreamies.setCollideWorldBounds(true);
-    dreamies.setBounce(0.5);
+    this.dreamies = this.physics.add.group({
+      setCollideWorldBounds: true,
+      allowGravity: false,
+    });
+
+    for (var i = 0; i < 8; i++) {
+      var x = Phaser.Math.RND.between(0, 1200);
+      var y = Phaser.Math.RND.between(0, 700);
+
+      var dreamiesAll = this.dreamies.create(x, y, 'dreamies');
+      dreamiesAll.setScale(0.15);
+      dreamiesAll.setCollideWorldBounds(true);
+    }
+
+    dreamies = this.dreamies;
 
     //how all the objects interact with each other
-    this.physics.add.collider(dash, dreamies);
+    //this.physics.add.collider(dash, dreamies);
     this.physics.add.collider(dash, treeStump);
     this.physics.add.collider(dash, mushroom1);
     this.physics.add.collider(dash, mushroom2);
@@ -149,7 +160,10 @@ function create () {
 
 function update () {
     floatingLog.anims.play('floating-log', true);
-    dreamies.anims.play('dreamies-anim', true);
+
+    dreamies.children.iterate(dreamie => {
+      dreamie.anims.play('dreamies-anim', true);
+    })
 
 
     if (cursors.left.isDown) {
