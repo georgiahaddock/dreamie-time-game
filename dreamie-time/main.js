@@ -9,7 +9,7 @@ let mushroom3;
 let floatingLog;
 let cursors;
 let isWalking;
-let platforms;
+let dreamies;
 // let meow_audio;
 
 new Phaser.Game({
@@ -36,13 +36,15 @@ function preload () {
     this.load.image("bg7", "./assets/shroom-background/7.png");
 
     //load Dash the cat sprites
-    this.load.spritesheet('idle', './assets/cat-spritesheet.png', {frameWidth: 32, frameHeight: 32})
-    this.load.spritesheet('run', './assets/cat-spritesheet.png', {frameWidth: 32, frameHeight: 32})
-    this.load.spritesheet('jump', './assets/cat-spritesheet.png', {frameWidth: 32, frameHeight: 32})
+    this.load.spritesheet('idle', './assets/cat-spritesheet.png', { frameWidth: 32, frameHeight: 32 })
+    this.load.spritesheet('run', './assets/cat-spritesheet.png', { frameWidth: 32, frameHeight: 32 })
+    this.load.spritesheet('jump', './assets/cat-spritesheet.png', { frameWidth: 32, frameHeight: 32 })
 
     //load floating log sprite
-    this.load.spritesheet('floating-log', './assets/floatingLog.png', {frameWidth: 814, frameHeight: 140})
+    this.load.spritesheet('floating-log', './assets/floatingLog.png', { frameWidth: 814, frameHeight: 140 })
 
+    //load dreamie sprite
+    this.load.spritesheet('dreamies', './assets/dreamies-spritesheet.png', { frameWidth: 716, frameHeight: 716 })
 
     // this.load.audio('meow url')
 }
@@ -54,14 +56,13 @@ function create () {
     this.add.image(400, 300, "bg5");
     this.add.image(400, 300, "bg4");
     this.add.image(400, 300, "bg3");
-
-    //set up foreground
-    platforms = this.physics.add.staticGroup();
-    platforms.create(400, 400, "bg2").refreshBody();
+    this.add.image(400, 400, "bg2");
 
     //initialise Dash the cat!
     dash = this.physics.add.sprite(0, 0, 'idle');
     dash.setScale(2.5);
+    dash.setBounce(0.5);
+    dash.setCollideWorldBounds(true);
 
     //initialise invisible platforms that match the background
     treeStump = this.physics.add.sprite(250, 470).setScale(5, 1);
@@ -84,15 +85,18 @@ function create () {
     floatingLog.body.immovable = true;
     floatingLog.body.allowGravity = false;
 
-    //dash.setBounce(0.1)
-    dash.setCollideWorldBounds(true);
-    this.physics.add.collider(dash, platforms);
+    //set up the dreamies!!
+    dreamies = this.physics.add.sprite(550, 550, "dreamies").setScale(0.15);
+    dreamies.setCollideWorldBounds(true);
+    dreamies.setBounce(0.5);
+
+    //how all the objects interact with each other
+    this.physics.add.collider(dash, dreamies);
     this.physics.add.collider(dash, treeStump);
     this.physics.add.collider(dash, mushroom1);
     this.physics.add.collider(dash, mushroom2);
     this.physics.add.collider(dash, mushroom3);
     this.physics.add.collider(dash, floatingLog);
-
 
     cursors = this.input.keyboard.createCursorKeys();
     //meow = this.sound.add('meow')
@@ -133,10 +137,20 @@ function create () {
         frames: this.anims.generateFrameNumbers('floating-log', {end: 3}),
         frameRate: 6
     })
+
+    //dreamies animation
+    this.anims.create({
+      key: 'dreamies-anim',
+      repeat: -1,
+      frames: this.anims.generateFrameNumbers('dreamies', {end: 2}),
+      frameRate: 6
+    })
 }
 
 function update () {
     floatingLog.anims.play('floating-log', true);
+    dreamies.anims.play('dreamies-anim', true);
+
 
     if (cursors.left.isDown) {
         isWalking = true

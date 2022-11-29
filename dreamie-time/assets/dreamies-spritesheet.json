@@ -1,0 +1,83 @@
+{
+	"textures": [
+		{
+			"image": "dreamies-spritesheet.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 2148,
+				"h": 716
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "1.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 716,
+						"h": 716
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 716,
+						"h": 716
+					},
+					"frame": {
+						"x": 0,
+						"y": 0,
+						"w": 716,
+						"h": 716
+					}
+				},
+				{
+					"filename": "2.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 640,
+						"h": 640
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 640,
+						"h": 640
+					},
+					"frame": {
+						"x": 716,
+						"y": 0,
+						"w": 640,
+						"h": 640
+					}
+				},
+				{
+					"filename": "3.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 716,
+						"h": 716
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 716,
+						"h": 716
+					},
+					"frame": {
+						"x": 1432,
+						"y": 0,
+						"w": 716,
+						"h": 716
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:4b0a24c67287c56fd5836348bd7b51ca:5b7038f8e375c739fdbbb1dcf87d37f9:8547fc4ba13baa80577f048fe36bdd87$"
+	}
+}
