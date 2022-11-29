@@ -5,6 +5,8 @@ let dash;
 let treeStump;
 let mushroom1;
 let mushroom2;
+let mushroom3;
+let floatingLog;
 let cursors;
 let isWalking;
 let platforms;
@@ -25,7 +27,7 @@ new Phaser.Game({
 })
 
 function preload () {
-    this.load.image("bg1", "./assets/shroom-background/1.png");
+  //load background layers
     this.load.image("bg2", "./assets/shroom-background/2.png");
     this.load.image("bg3", "./assets/shroom-background/3.png");
     this.load.image("bg4", "./assets/shroom-background/4.png");
@@ -33,9 +35,15 @@ function preload () {
     this.load.image("bg6", "./assets/shroom-background/6.png");
     this.load.image("bg7", "./assets/shroom-background/7.png");
 
+    //load Dash the cat sprites
     this.load.spritesheet('idle', './assets/cat-spritesheet.png', {frameWidth: 32, frameHeight: 32})
     this.load.spritesheet('run', './assets/cat-spritesheet.png', {frameWidth: 32, frameHeight: 32})
     this.load.spritesheet('jump', './assets/cat-spritesheet.png', {frameWidth: 32, frameHeight: 32})
+
+    //load floating log sprite
+    this.load.spritesheet('floating-log', './assets/floatingLog.png', {frameWidth: 814, frameHeight: 140})
+
+
     // this.load.audio('meow url')
 }
 
@@ -47,30 +55,34 @@ function create () {
     this.add.image(400, 300, "bg4");
     this.add.image(400, 300, "bg3");
 
-    //set up platforms
+    //set up foreground
     platforms = this.physics.add.staticGroup();
     platforms.create(400, 400, "bg2").refreshBody();
-    platforms.create(500, 200, "bg1").setScale(0.3).refreshBody();
 
     //initialise Dash the cat!
     dash = this.physics.add.sprite(0, 0, 'idle');
     dash.setScale(2.5);
 
     //initialise invisible platforms that match the background
-    treeStump = this.physics.add.sprite(250, 470);
+    treeStump = this.physics.add.sprite(250, 470).setScale(5, 1);
     treeStump.body.immovable = true;
     treeStump.body.allowGravity = false;
-    treeStump.setScale(5, 1);
 
-    mushroom1 = this.physics.add.sprite(850, 200);
+    mushroom1 = this.physics.add.sprite(850, 200).setScale(3, 1);
     mushroom1.body.immovable = true;
     mushroom1.body.allowGravity = false;
-    mushroom1.setScale(3, 1);
 
-    mushroom2 = this.physics.add.sprite(1000, 220);
+    mushroom2 = this.physics.add.sprite(1000, 220).setScale(3, 1);
     mushroom2.body.immovable = true;
     mushroom2.body.allowGravity = false;
-    mushroom2.setScale(3, 1);
+
+    mushroom3 = this.physics.add.sprite(150, 150).setScale(3, 1);
+    mushroom3.body.immovable = true;
+    mushroom3.body.allowGravity = false;
+
+    floatingLog = this.physics.add.sprite(575, 200, "floating-log").setScale(0.25);
+    floatingLog.body.immovable = true;
+    floatingLog.body.allowGravity = false;
 
     //dash.setBounce(0.1)
     dash.setCollideWorldBounds(true);
@@ -78,11 +90,14 @@ function create () {
     this.physics.add.collider(dash, treeStump);
     this.physics.add.collider(dash, mushroom1);
     this.physics.add.collider(dash, mushroom2);
+    this.physics.add.collider(dash, mushroom3);
+    this.physics.add.collider(dash, floatingLog);
 
 
     cursors = this.input.keyboard.createCursorKeys();
     //meow = this.sound.add('meow')
 
+    //Dash the cat animations
     this.anims.create({
         key: 'idle',
         frameRate: 10,
@@ -110,9 +125,19 @@ function create () {
         frames: this.anims.generateFrameNumbers('jump', { start: 40, end: 45 }),
         frameRate: 5
     })
+
+    //floating log animation
+    this.anims.create({
+        key: 'floating-log',
+        repeat: -1,
+        frames: this.anims.generateFrameNumbers('floating-log', {end: 3}),
+        frameRate: 6
+    })
 }
 
 function update () {
+    floatingLog.anims.play('floating-log', true);
+
     if (cursors.left.isDown) {
         isWalking = true
         dash.setVelocityX(-290)
