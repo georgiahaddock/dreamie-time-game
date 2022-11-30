@@ -9,6 +9,8 @@ let floatingLog;
 let cursors;
 let isWalking;
 let dreamies;
+let collected = 0;
+let complete = false;
 // let meow_audio;
 
 new Phaser.Game({
@@ -108,6 +110,9 @@ function create () {
     this.physics.add.collider(dash, mushroom2);
     this.physics.add.collider(dash, mushroom3);
     this.physics.add.collider(dash, floatingLog);
+    this.physics.add.collider(dash, this.dreamies, (player, dreamie)=>{dreamie.destroy();
+      collected ++;
+      console.log(collected);})
 
     cursors = this.input.keyboard.createCursorKeys();
     //meow = this.sound.add('meow')
@@ -189,6 +194,19 @@ function update () {
         isWalking = false
         dash.setVelocityX(0)
         dash.anims.play('idle', true)
+    }
+
+    // this.dreamies.getChildren().forEach(function(dreamie) {
+    //   if(dash.x === dreamie.x && dash.y === dreamie.y){
+    //     dreamie.destroy();
+    //     collected ++;
+    //     console.log(collected);
+    //   }
+    // }, this);
+
+
+    if(collected === 8){
+      complete = true;
     }
 
     // if(isWalking && !audio_feet.isPlaying) {
