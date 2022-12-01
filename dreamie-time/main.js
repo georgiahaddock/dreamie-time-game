@@ -73,13 +73,14 @@ function create () {
     dash.setScale(3);
     dash.setBounce(0);
     dash.setCollideWorldBounds(true);
-    dash.setSize(15, 15).setOffset(10,18);
+    dash.setSize(5, 10).setOffset(15, 22);
 
     button = this.physics.add.sprite(1100, 100, 'button');
     button.setScale(0.2);
     button.setCollideWorldBounds(true);
     button.body.immovable = true;
     button.body.allowGravity = false;
+    button.setSize(300, 300).setOffset(390,600)
 
     //initialise invisible platforms that match the background
     // treeStump = this.physics.add.sprite(250, 470).setScale(5, 1);
@@ -145,7 +146,6 @@ function create () {
     dreamies = this.physics.add.group({
       setCollideWorldBounds: true,
       allowGravity: false,
-      immovable: true
     });
 
     function deployDreamies(dash, button){
@@ -161,14 +161,17 @@ function create () {
 
       var dreamiesAll = dreamies.create(x, y, 'dreamies').setScale(0.15);
       dreamiesAll.setCollideWorldBounds(true);
+      dreamiesAll.setSize(300, 550).setOffset(170, 60);
 
       button.destroy();
+
     }
   }
 
 
     //how all the objects interact with each other
     this.physics.add.collider(dash, this.floatingLogs);
+    this.physics.add.collider(dreamies, this.floatingLogs);
     this.physics.add.collider(dash, dreamies, (player, dreamie)=>{
       dreamie.destroy();
       collected ++;
