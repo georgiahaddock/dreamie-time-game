@@ -71,7 +71,7 @@ function create () {
 
     dash = this.physics.add.sprite(0, 0, 'idle');
     dash.setScale(3);
-    dash.setBounce(0.5);
+    dash.setBounce(0);
     dash.setCollideWorldBounds(true);
     dash.setSize(15, 15).setOffset(10,18);
 
@@ -250,7 +250,7 @@ function update () {
 
     if(cursors.up.isDown && (dash.body.touching.down || dash.body.onFloor())){
       isWalking= false;
-      dash.setVelocityY(-500)
+      dash.setVelocityY(-600)
       if(dash.flipX===true){
         dash.setVelocityX(-50)
       }else{
