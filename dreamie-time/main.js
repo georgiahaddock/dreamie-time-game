@@ -6,6 +6,7 @@ let mushroom3;
 let floatingLogs;
 let cursors;
 let isWalking;
+let deployedDreamies;
 let isJumping;
 let dreamies;
 let collected = 0;
@@ -55,6 +56,7 @@ function preload () {
     this.load.audio('meow','./assets/audio/meow 1.mp3');
 }
 
+
 function create () {
     //setting up the background
     this.add.image(400, 300, "bg7");
@@ -69,7 +71,7 @@ function create () {
 
     dash = this.physics.add.sprite(0, 0, 'idle');
     dash.setScale(3);
-    dash.setBounce(0.1);
+    dash.setBounce(0.5);
     dash.setCollideWorldBounds(true);
     dash.setSize(15, 15).setOffset(10,18);
 
@@ -106,9 +108,9 @@ function create () {
       allowGravity: false
     })
 
-    for (var i = 0; i < 15; i++) {
+    for (var i = 0; i < 10; i++) {
       var x = Phaser.Math.RND.between(0, 1200);
-      var y = Phaser.Math.RND.between(150, 700);
+      var y = Phaser.Math.RND.between(160, 600);
 
       var logsAll = this.floatingLogs.create(x, y, 'floating-log');
       logsAll.setScale(0.16);
@@ -123,35 +125,43 @@ function create () {
 
 
     //set up the dreamies!!
-    this.dreamies = this.physics.add.group({
+    dreamies = this.physics.add.group({
       setCollideWorldBounds: true,
       allowGravity: false,
       immovable: true
     });
 
-    for (var i = 0; i < 10; i++) {
-      var x = Phaser.Math.RND.between(0, 1200);
-      var y = Phaser.Math.RND.between(0, 700);
+    function deployDreamies(dash, button){
+      deployedDreamies = true;
+      for (var i = 0; i < 10; i++) {
+        var x = Phaser.Math.RND.between(0, 1200);
+        var y = Phaser.Math.RND.between(0, 700);
 
       while((x>1000 && y<250)){
         x = Phaser.Math.RND.between(0, 1200);
         y = Phaser.Math.RND.between(0, 700);
       }
 
-      var dreamiesAll = this.dreamies.create(x, y, 'dreamies').setScale(0.15);
+      var dreamiesAll = dreamies.create(x, y, 'dreamies').setScale(0.15);
       dreamiesAll.setCollideWorldBounds(true);
-    }
 
-    dreamies = this.dreamies;
+      button.destroy();
+    }
+  }
+
 
     //how all the objects interact with each other
     this.physics.add.collider(dash, this.floatingLogs);
-    this.physics.add.collider(dash, this.dreamies, (player, dreamie)=>{dreamie.destroy();
+    this.physics.add.collider(dash, dreamies, (player, dreamie)=>{
+      dreamie.destroy();
       collected ++;
       console.log(collected);
       document.getElementById("collected").innerHTML = collected;
       meow_audio.play();
     })
+    this.physics.add.collider(dash, button, deployDreamies, ()=> {
+      return !deployedDreamies;
+    });
 
     cursors = this.input.keyboard.createCursorKeys();
 
@@ -207,6 +217,8 @@ function create () {
       frames: this.anims.generateFrameNumbers('button', {end: 3}),
       frameRate: 8
     })
+    button.anims.play('button', true);
+
 }
 
 function update () {
@@ -218,8 +230,17 @@ function update () {
       dreamie.anims.play('dreamies-anim', true);
     })
 
-    button.anims.play('button', true);
 
+    if(cursors.up.isDown && (dash.body.touching.down || dash.body.onFloor())){
+      isWalking= false;
+      dash.setVelocityY(-500)
+      if(dash.flipX===true){
+        dash.setVelocityX(-50)
+      }else{
+        dash.setVelocityX(50)
+      }
+      dash.anims.play('up', true)
+    }
 
     if (cursors.left.isDown) {
         isWalking = true
@@ -231,18 +252,6 @@ function update () {
         dash.flipX = false
         dash.setVelocityX(290)
         dash.anims.play('right', true)
-    } else if(cursors.up.isDown && !isJumping){
-        isWalking= false;
-        isJumping=true;
-        dash.setVelocityY(-290)
-        if(dash.flipX===true){
-          dash.setVelocityX(-50)
-        }else{
-          dash.setVelocityX(50)
-        }
-        dash.anims.play('up', true)
-        function stopJumping () {isJumping=false};
-        setTimeout(stopJumping, 500);
     }else {
         isWalking = false
         dash.setVelocityX(0)

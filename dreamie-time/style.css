@@ -32,7 +32,8 @@ h1 {
 
 #stats {
   background-color: RGB(254,121,41);
-  font-family: ambidexter;
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-style: italic;
   width: 200px;
   height: 700px;
   float: right;
@@ -54,7 +55,9 @@ h1 {
   display: flex;
   justify-content: center;
   border-radius: 50px;
+  font-family: ambidexter;
   font-size: 76px;
+  font-style: normal;
 }
 
 .score{
