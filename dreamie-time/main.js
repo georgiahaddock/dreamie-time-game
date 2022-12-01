@@ -108,14 +108,31 @@ function create () {
       allowGravity: false
     })
 
-    for (var i = 0; i < 10; i++) {
-      var x = Phaser.Math.RND.between(0, 1200);
+    for (var i = 0; i < 4; i++) {
+      var x = Phaser.Math.RND.between(0, 400);
       var y = Phaser.Math.RND.between(160, 600);
 
       var logsAll = this.floatingLogs.create(x, y, 'floating-log');
       logsAll.setScale(0.16);
       logsAll.setCollideWorldBounds(true);
     }
+    for (var i = 0; i < 4; i++) {
+      var x = Phaser.Math.RND.between(400, 800);
+      var y = Phaser.Math.RND.between(160, 600);
+
+      var logsAll = this.floatingLogs.create(x, y, 'floating-log');
+      logsAll.setScale(0.16);
+      logsAll.setCollideWorldBounds(true);
+    }
+    for (var i = 0; i < 4; i++) {
+      var x = Phaser.Math.RND.between(800, 1200);
+      var y = Phaser.Math.RND.between(160, 600);
+
+      var logsAll = this.floatingLogs.create(x, y, 'floating-log');
+      logsAll.setScale(0.16);
+      logsAll.setCollideWorldBounds(true);
+    }
+
 
     floatingLogs = this.floatingLogs;
 
