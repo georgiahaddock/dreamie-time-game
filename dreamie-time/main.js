@@ -126,19 +126,15 @@ function create () {
     allowGravity: false,
   });
 
-  function countDown(){
-    console.log(time)
-    time--;
-
-    document.getElementById("time").innerText = clock.getRemainingSeconds();
-}
+  function countDownOver(){
+    document.getElementById("time").innerText = "X";
+  }
 
 clock = this.time.addEvent({
-  delay: 5000,
-  callback: countDown,
+  delay: 20000,
+  callback: countDownOver,
   repeat: 0
 });
-
 clock.paused = true;
 
 
@@ -160,6 +156,7 @@ function deployDreamies(dash, button){
   button.destroy();
 
   clock.paused = false;
+
   }
 
 }
@@ -278,6 +275,8 @@ function update () {
   if(collected === 8){
     complete = true;
   }
+
+  document.getElementById("time").innerText = Math.round(clock.getRemainingSeconds());
 
   // if(isWalking && !audio_feet.isPlaying) {
   //     audio_feet.play()
