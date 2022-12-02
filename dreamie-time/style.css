@@ -39,25 +39,26 @@ h1 {
   float: right;
   text-align: center;
   display: grid;
-  justify-content: center;
+  grid-template-rows: 200px auto auto 200px;
+  justify-items: center;
 }
 
-#collected-title{
+.title{
   padding: 10px;
   font-size: 30px
 }
 
-#collected {
+.circle {
   background-color: yellow;
   color: rgb(0, 0, 0);
   width: 100px;
   height: 100px;
   display: flex;
-  justify-content: center;
   border-radius: 50px;
   font-family: ambidexter;
   font-size: 76px;
   font-style: normal;
+  justify-content: center;
 }
 
 .score{
