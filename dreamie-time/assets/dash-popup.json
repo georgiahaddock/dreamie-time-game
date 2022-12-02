@@ -1,0 +1,125 @@
+{
+	"textures": [
+		{
+			"image": "dash-popup.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 5370,
+				"h": 826
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "My project-1 (1).png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1080,
+						"h": 1080
+					},
+					"spriteSourceSize": {
+						"x": 8,
+						"y": 159,
+						"w": 1072,
+						"h": 824
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 1072,
+						"h": 824
+					}
+				},
+				{
+					"filename": "My project-1 (2).png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1080,
+						"h": 1080
+					},
+					"spriteSourceSize": {
+						"x": 8,
+						"y": 159,
+						"w": 1072,
+						"h": 824
+					},
+					"frame": {
+						"x": 1075,
+						"y": 1,
+						"w": 1072,
+						"h": 824
+					}
+				},
+				{
+					"filename": "My project-1 (3).png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1080,
+						"h": 1080
+					},
+					"spriteSourceSize": {
+						"x": 8,
+						"y": 159,
+						"w": 1072,
+						"h": 824
+					},
+					"frame": {
+						"x": 2149,
+						"y": 1,
+						"w": 1072,
+						"h": 824
+					}
+				},
+				{
+					"filename": "My project-1 (4).png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1080,
+						"h": 1080
+					},
+					"spriteSourceSize": {
+						"x": 8,
+						"y": 159,
+						"w": 1072,
+						"h": 824
+					},
+					"frame": {
+						"x": 3223,
+						"y": 1,
+						"w": 1072,
+						"h": 824
+					}
+				},
+				{
+					"filename": "My project-1 (5).png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 1080,
+						"h": 1080
+					},
+					"spriteSourceSize": {
+						"x": 8,
+						"y": 159,
+						"w": 1072,
+						"h": 824
+					},
+					"frame": {
+						"x": 4297,
+						"y": 1,
+						"w": 1072,
+						"h": 824
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:fcd461c3f2d1014fc986f1f6f7cf640a:cda34876df76937feddddff084110b8e:51dc10f6d1cfb088a005bf6ac1987cd3$"
+	}
+}

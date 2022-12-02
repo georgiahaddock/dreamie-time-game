@@ -17,6 +17,7 @@ let button
 let clock;
 const noOfDreamies = 10;
 let dreamieCollider;
+let popup;
 
 new Phaser.Game({
   type: Phaser.AUTO,
@@ -46,6 +47,9 @@ function preload () {
   this.load.spritesheet('idle', './assets/cat-spritesheet.png', { frameWidth: 32, frameHeight: 32 });
   this.load.spritesheet('run', './assets/cat-spritesheet.png', { frameWidth: 32, frameHeight: 32 });
   this.load.spritesheet('jump', './assets/cat-spritesheet.png', { frameWidth: 32, frameHeight: 32 });
+
+  //EOG popup sprite
+  this.load.spritesheet('popup', './assets/dash-popup.png', { frameWidth: 1072 , frameHeight: 824 });
 
   //load floating log sprite
   this.load.spritesheet('floating-log', './assets/floatingLog.png', { frameWidth: 814, frameHeight: 140 });
@@ -138,7 +142,7 @@ function create () {
   }
 
 clock = this.time.addEvent({
-  delay: 20000,
+  delay: 2000,
   callback: countDownOver,
   repeat: 0
 });
@@ -237,6 +241,14 @@ function deployDreamies(dash, button){
   })
   button.anims.play('button', true);
 
+  //popup animation
+  this.anims.create({
+    key: 'pop-up',
+    repeat: -1,
+    frames: this.anims.generateFrameNumbers('popup', {end: 4}),
+    frameRate: 8
+  })
+
 }
 
 function update () {
@@ -247,7 +259,6 @@ function update () {
   dreamies.children.iterate(dreamie => {
     dreamie.anims.play('dreamies-anim', true);
   })
-
 
 
   if(cursors.up.isDown && (dash.body.touching.down || dash.body.onFloor())){
@@ -288,8 +299,15 @@ function update () {
 
   if(timeLeft === 0 || collected === noOfDreamies){
     clock.paused = true;
+
     this.physics.world.removeCollider(dreamieCollider);
+
     music.setRate(2);
+
+    popup = this.physics.add.sprite(630, 400, "popup");
+    popup.rotation += 0.4;
+    popup.setScale(1.2);
+    popup.anims.play('pop-up', true);
 
     if(collected === noOfDreamies){
       document.getElementById("results").innerHTML = `You scoffed all ${noOfDreamies} Dreamies, you beast!`
