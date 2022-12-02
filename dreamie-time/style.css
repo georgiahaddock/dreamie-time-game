@@ -39,8 +39,9 @@ h1 {
   float: right;
   text-align: center;
   display: grid;
-  grid-template-rows: 200px auto auto 200px;
+  grid-template-rows: 220px auto 220px;
   justify-items: center;
+  bottom: 10px;
 }
 
 .title{
