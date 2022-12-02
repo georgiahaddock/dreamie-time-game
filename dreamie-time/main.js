@@ -11,6 +11,7 @@ let isJumping;
 let dreamies;
 let collected = 0;
 let complete = false;
+let music;
 let meow_audio;
 let button
 let clock;
@@ -54,6 +55,7 @@ function preload () {
   this.load.spritesheet('button', './assets/button/button.png', { frameWidth: 1007 , frameHeight: 926 });
 
   //audio files
+  this.load.audio("music", './assets/audio/ELEVATOR.mp3')
   this.load.audio('meow','./assets/audio/meow 1.mp3');
 }
 
@@ -69,6 +71,9 @@ function create () {
 
   //initialise audio
   meow_audio = this.sound.add('meow');
+  music = this.sound.add('music');
+  music.play();
+
 
   dash = this.physics.add.sprite(0, 0, 'idle');
   dash.setScale(3);
@@ -161,8 +166,6 @@ function deployDreamies(dash, button){
 
 }
 
-
-
   //how all the objects interact with each other
   this.physics.add.collider(dash, this.floatingLogs);
   this.physics.add.collider(dreamies, this.floatingLogs);
@@ -242,6 +245,7 @@ function update () {
   dreamies.children.iterate(dreamie => {
     dreamie.anims.play('dreamies-anim', true);
   })
+
 
 
   if(cursors.up.isDown && (dash.body.touching.down || dash.body.onFloor())){
