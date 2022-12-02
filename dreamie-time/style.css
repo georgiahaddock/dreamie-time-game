@@ -32,8 +32,7 @@ h1 {
 
 #stats {
   background-color: RGB(254,121,41);
-  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-  font-style: italic;
+  font-family:ambidexter;
   width: 200px;
   height: 700px;
   float: right;
@@ -51,7 +50,7 @@ h1 {
 
 .circle {
   background-color: yellow;
-  color: rgb(0, 0, 0);
+  color: rgb(225, 0, 255);
   width: 100px;
   height: 100px;
   display: flex;
@@ -67,7 +66,20 @@ h1 {
 }
 
 #results{
-  font-size: 27px;
-  padding: 20px;
+  font-size: 350%;
+  font-family: ambidexter;
   position: absolute;
+  top: 40%;
+  left: 16%;
+  color: white;
+  text-shadow: 50px black;
+  max-width: 50%;
+}
+
+button {
+  font-family: ambidexter;
+  font-size: 250%;
+  border-radius: 70px;
+  color: blueviolet;
+  background-color: aquamarine;
 }

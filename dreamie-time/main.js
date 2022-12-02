@@ -18,6 +18,7 @@ let clock;
 const noOfDreamies = 10;
 let dreamieCollider;
 let popup;
+let btn;
 
 new Phaser.Game({
   type: Phaser.AUTO,
@@ -149,11 +150,11 @@ clock = this.time.addEvent({
 });
 clock.paused = true;
 
-popup = this.physics.add.sprite(630, 400, "popup");
+popup = this.physics.add.sprite(610, 400, "popup");
 popup.body.immovable = true;
 popup.body.allowGravity = false;
-popup.rotation += 0.4;
-popup.setScale(1.2);
+popup.rotation += 0.35;
+popup.setScale(1.3);
 popup.setVisible(false);
 
 
@@ -257,6 +258,8 @@ function deployDreamies(dash, button){
     frameRate: 8
   })
 
+
+
 }
 
 function update () {
@@ -271,31 +274,30 @@ function update () {
 
   if(cursors.up.isDown && (dash.body.touching.down || dash.body.onFloor())){
     isWalking= false;
-    dash.setVelocityY(-600)
+    dash.setVelocityY(-600);
     if(dash.flipX===true){
-      dash.setVelocityX(-50)
+      dash.setVelocityX(-50);
     }else{
-      dash.setVelocityX(50)
+      dash.setVelocityX(50);
     }
-    dash.anims.play('up', true)
+    dash.anims.play('up', true);
   }
 
   if (cursors.left.isDown) {
-      isWalking = true
-      dash.setVelocityX(-290)
-      dash.flipX = true
-      dash.anims.play('left', true)
+      isWalking = true;
+      dash.setVelocityX(-290);
+      dash.flipX = true;
+      dash.anims.play('left', true);
   } else if (cursors.right.isDown) {
-      isWalking = true
-      dash.flipX = false
-      dash.setVelocityX(290)
-      dash.anims.play('right', true)
+      isWalking = true;
+      dash.flipX = false;
+      dash.setVelocityX(290);
+      dash.anims.play('right', true);
   }else {
-      isWalking = false
-      dash.setVelocityX(0)
-      dash.anims.play('idle', true)
+      isWalking = false;
+      dash.setVelocityX(0);
+      dash.anims.play('idle', true);
   }
-
 
   if(collected === 8){
     complete = true;
@@ -316,16 +318,24 @@ function update () {
     popup.depth = 5;
     popup.anims.play('pop-up', true);
 
+    //replay button
+    // btn = document.createElement('button');
+    // document.getElementById("results").appendChild(btn);
+    // btn.innerHTML = "play again meow";
+    // btn.type = 'submit';
+    // btn.onclick = console.log('yes');
+
 
     if(collected === noOfDreamies){
-      document.getElementById("results").innerHTML = `You scoffed all ${noOfDreamies} Dreamies, you beast!`
+      document.getElementById("results").innerHTML = `You scoffed all ${noOfDreamies} Dreamies, you beast!`;
     }
     else if(collected ===0){
-      document.getElementById("results").innerHTML = `You didn't gobble up any Dreamies? Are you even a real cat?!!`
+      document.getElementById("results").innerHTML = `You didn't gobble up any Dreamies? Are you even a real cat?!!`;
     }
     else{
-      document.getElementById("results").innerHTML = `You only guzzled ${collected} out of ${noOfDreamies} Dreamies, slow poke!`
+      document.getElementById("results").innerHTML = `You only guzzled ${collected} out of ${noOfDreamies} Dreamies, slow poke!`;
     }
+
 
   }
 
