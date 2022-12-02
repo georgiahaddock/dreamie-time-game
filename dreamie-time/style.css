@@ -17,7 +17,7 @@ h1 {
 }
 
 #screen {
-  background-color: rgb(0, 255, 255);
+  background-color: rgb(228, 149, 224);
   height: 900px;
   width: 1550px;
 
@@ -64,4 +64,9 @@ h1 {
 
 .score{
   bottom: 10px;
+}
+
+#results{
+  font-size: 27px;
+  padding: 20px;
 }

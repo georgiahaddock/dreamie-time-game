@@ -15,6 +15,8 @@ let music;
 let meow_audio;
 let button
 let clock;
+const noOfDreamies = 10;
+let dreamieCollider;
 
 new Phaser.Game({
   type: Phaser.AUTO,
@@ -145,7 +147,7 @@ clock.paused = true;
 
 function deployDreamies(dash, button){
   deployedDreamies = true;
-  for (var i = 0; i < 10; i++) {
+  for (var i = 0; i < noOfDreamies; i++) {
     var x = Phaser.Math.RND.between(0, 1200);
     var y = Phaser.Math.RND.between(0, 700);
 
@@ -161,15 +163,15 @@ function deployDreamies(dash, button){
   button.destroy();
 
   clock.paused = false;
+  music.setRate(1.5);
 
   }
-
 }
 
   //how all the objects interact with each other
   this.physics.add.collider(dash, this.floatingLogs);
   this.physics.add.collider(dreamies, this.floatingLogs);
-  this.physics.add.collider(dash, dreamies, (player, dreamie)=>{
+  dreamieCollider = this.physics.add.collider(dash, dreamies, (player, dreamie)=>{
     dreamie.destroy();
     collected ++;
     document.getElementById("collected").innerHTML = collected;
@@ -280,11 +282,26 @@ function update () {
     complete = true;
   }
 
-  document.getElementById("time").innerText = Math.round(clock.getRemainingSeconds());
+  var timeLeft = Math.round(clock.getRemainingSeconds());
 
-  // if(isWalking && !audio_feet.isPlaying) {
-  //     audio_feet.play()
-  // }
+  document.getElementById("time").innerText = timeLeft;
+
+  if(timeLeft === 0 || collected === noOfDreamies){
+    clock.paused = true;
+    this.physics.world.removeCollider(dreamieCollider);
+    music.setRate(2);
+
+    if(collected === noOfDreamies){
+      document.getElementById("results").innerHTML = `You scoffed all ${noOfDreamies} Dreamies, you beast!`
+    }
+    else if(collected ===0){
+      document.getElementById("results").innerHTML = `You didn't gobble up any Dreamies? Are you even a real cat?!!`
+    }
+    else{
+      document.getElementById("results").innerHTML = `You only guzzled ${collected} out of ${noOfDreamies} Dreamies, slow poke!`
+    }
+
+  }
 
 
 }
