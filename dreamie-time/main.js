@@ -93,6 +93,7 @@ function create () {
     allowGravity: false
   })
 
+
   for (var i = 0; i < 4; i++) {
     var x = Phaser.Math.RND.between(0, 400);
     var y = Phaser.Math.RND.between(160, 600);
@@ -147,6 +148,13 @@ clock = this.time.addEvent({
   repeat: 0
 });
 clock.paused = true;
+
+popup = this.physics.add.sprite(630, 400, "popup");
+popup.body.immovable = true;
+popup.body.allowGravity = false;
+popup.rotation += 0.4;
+popup.setScale(1.2);
+popup.setVisible(false);
 
 
 function deployDreamies(dash, button){
@@ -304,10 +312,10 @@ function update () {
 
     music.setRate(2);
 
-    popup = this.physics.add.sprite(630, 400, "popup");
-    popup.rotation += 0.4;
-    popup.setScale(1.2);
+    popup.setVisible(true);
+    popup.depth = 5;
     popup.anims.play('pop-up', true);
+
 
     if(collected === noOfDreamies){
       document.getElementById("results").innerHTML = `You scoffed all ${noOfDreamies} Dreamies, you beast!`
