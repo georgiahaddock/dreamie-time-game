@@ -144,7 +144,7 @@ function create () {
   }
 
 clock = this.time.addEvent({
-  delay: 2000,
+  delay: 20000,
   callback: countDownOver,
   repeat: 0
 });
